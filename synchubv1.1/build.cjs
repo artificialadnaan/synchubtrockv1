@@ -6,7 +6,7 @@ const fs = require("fs");
 const path = require("path");
 
 const ALLOWLIST = [
-  "connect-pg-simple", "drizzle-orm", "express", "express-session",
+  "connect-pg-simple", "drizzle-orm", "drizzle-zod", "express", "express-session",
   "passport", "passport-local", "passport-google-oauth20", "pg", "bcryptjs", "zod",
 ];
 
