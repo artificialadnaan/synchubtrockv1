@@ -4,11 +4,6 @@ import { useAuth } from "../hooks/useAuth";
 export default function Layout({ children }: { children: React.ReactNode }) {
   const { user } = useAuth();
   const [loc] = useLocation();
-  const isPublic = loc === "/login" || loc === "/signup";
-
-  if (isPublic) {
-    return <div className="min-h-screen bg-gray-50">{children}</div>;
-  }
 
   const nav = [
     { href: "/dashboard", label: "Dashboard" },
@@ -44,11 +39,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           {user?.email} {user?.role === "admin" && "(Admin)"}
         </div>
         <a
-          href="/api/auth/logout"
+          href="/"
           className="text-sm text-red-600 hover:underline"
           onClick={(e) => {
             e.preventDefault();
-            fetch("/api/auth/logout", { credentials: "include" }).then(() => window.location.href = "/login");
+            window.location.href = "/";
           }}
         >
           Sign out

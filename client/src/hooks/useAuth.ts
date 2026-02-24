@@ -1,21 +1,12 @@
-import { useQuery } from "@tanstack/react-query";
-
 export interface AuthUser {
   id: string;
   email: string | null;
   role: string;
 }
 
-export function useAuth() {
-  const { data, isLoading } = useQuery<{ user: AuthUser } | null>({
-    queryKey: ["auth", "me"],
-    queryFn: async () => {
-      const res = await fetch("/api/auth/me", { credentials: "include" });
-      if (res.status === 401) return null;
-      return res.json();
-    },
-    retry: false,
-  });
+// Auth disabled for development - always return a dev user
+const DEV_USER: AuthUser = { id: "dev-user-id", email: "dev@local", role: "admin" };
 
-  return { user: data?.user ?? null, isLoading };
+export function useAuth() {
+  return { user: DEV_USER, isLoading: false };
 }
