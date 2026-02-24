@@ -17,7 +17,7 @@ app.use(express.urlencoded({ extended: false }));
 const pgSession = connectPgSession(session);
 app.use(
   session({
-    store: new pgSession({ pool }),
+    store: new pgSession({ pool, createTableIfMissing: true }),
     secret: process.env.SESSION_SECRET || "synchub-secret-change-in-production",
     resave: false,
     saveUninitialized: false,
