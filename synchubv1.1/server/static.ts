@@ -8,5 +8,5 @@ export function serveStatic(app: Express) {
     throw new Error(`Build directory not found: ${distPath}. Run npm run build first.`);
   }
   app.use(express.static(distPath));
-  app.get("*", (_req, res) => res.sendFile(path.join(distPath, "index.html")));
+  app.get("/{*splat}", (_req, res) => res.sendFile(path.join(distPath, "index.html")));
 }
