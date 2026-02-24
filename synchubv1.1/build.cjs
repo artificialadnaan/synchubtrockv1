@@ -19,8 +19,9 @@ async function build() {
   const deps = [...Object.keys(pkg.dependencies || {}), ...Object.keys(pkg.devDependencies || {})];
   const externals = deps.filter((d) => !ALLOWLIST.includes(d));
   await esbuild.build({
-    entryPoints: ["server/index.ts"],
+    entryPoints: ["server/start.ts"],
     platform: "node",
+    target: "node18",
     bundle: true,
     format: "cjs",
     outfile: "dist/index.cjs",

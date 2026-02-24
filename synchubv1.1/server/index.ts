@@ -44,16 +44,23 @@ app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
 });
 
 const port = parseInt(process.env.PORT || "5000", 10);
+const listenOpts = { port, host: "0.0.0.0" as const };
+
 if (process.env.NODE_ENV === "production") {
-  serveStatic(app);
-  httpServer.listen({ port, host: "0.0.0.0", reusePort: true }, () => {
+  try {
+    serveStatic(app);
+  } catch (e) {
+    console.error("[SyncHub] serveStatic failed:", (e as Error)?.message);
+    throw e;
+  }
+  httpServer.listen(listenOpts, () => {
     console.log(`SyncHub v1.1 serving on port ${port}`);
   });
 } else {
   (async () => {
     const { setupVite } = await import("./vite");
     await setupVite(httpServer, app);
-    httpServer.listen({ port, host: "0.0.0.0", reusePort: true }, () => {
+    httpServer.listen(listenOpts, () => {
       console.log(`SyncHub v1.1 serving on port ${port}`);
     });
   })();
